@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Adopt a Pet{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="mb-4">Pets</h1>
+                <a class="btn btn-info btn-add-pet mb-3" href="/add" role="button">Add a Pet</a>
+                <div class="container d-flex flex-wrap justify-content-center p-3">
+                    {% if pets %}
+                        {% for pet in pets %}
+                            <a href="/{{pet.id}}">
+                                <div class="card d-inline-flex align-items-center p-1 pet-card">
+                                    <img src="{{pet.photo_url}}" class="card-img-top thumbnail" alt="Photo of {{pet.name}}">
+                                    <div class="card-body pet-card-body">
+                                    <p class="card-text">
+                                        <span class="pet-card-name">{{pet.name}} </span>
+                                        {% if pet.available %}
+                                            <span class="pet-card-available">is available!</span>
+                                        {% else %}
+                                            <span class="pet-card-unavailable">is not available</span>
+                                        {% endif %}
+                                    </p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="card d-inline-flex align-items-center p-1 pet-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Paw-print.svg/419px-Paw-print.svg.png" class="card-img-top paw-png" alt="Paw Photo">
+                            <div class="card-body pet-card-body">
+                            <p class="card-text pet-card-available">More pets coming soon!</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

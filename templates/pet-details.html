@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Pet Details{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>{{pet.name}}'s Details</h1>
+                <div class="card flex-row flex-wrap pet-details mb-4">
+                    <div class="card-header border-0">
+                        <img class="main-img" src={{pet.photo_url}} alt="{{pet.name}}'s Photo" />
+                    </div>
+                    <div class="card-block px-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Name: {{pet.name}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Species: {{pet.species.upper()}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Age: {{pet.age if pet.age >= 0 else 'N/A'}}</h6>
+                          </div>
+                    </div>
+                </div>
+                <form class="form-pet-edit" action="/{{pet.id}}" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{form.photo_url.label}} {{form.photo_url(size=20, class_="form-control", placeholder="Provide photo of pet (optional)", value=pet.photo_url)}}
+                        {% if form.errors['photo_url'] %}
+                            <small class="form-error">{{form.errors['photo_url'][0]}}</small>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">{{form.notes.label}} {{form.notes(size=20, rows="3", class_="form-control")}}</div>
+                    <div class="mb-3">{{form.available(class_="form-check-input")}} {{form.available.label}}</div>
+                    <button type="submit" class="btn btn-info btn-add-pet">Save Changes</button>
+                    <a class="btn btn-outline-secondary" href="/" role="button">Return to Pets</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
